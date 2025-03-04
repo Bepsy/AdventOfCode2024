@@ -4,7 +4,7 @@ import Data.List (sort)
 import Language.Haskell.TH (safe, pprint)
 
 main = do
-  contents <- readFile "input_day2.txt"
+  contents <- readFile "input.txt"
   let lines = getArray contents (== '\n')
   let array = [getArray x (== ' ') |x <- lines]
   let arrayInt = map (map read) array :: [[Int]]
