@@ -5,9 +5,9 @@ main = do
   let vector = getVector (0,0) contents
   print $ findXMasCount vector vector
 
-type CartVectChar = (Int,Int,Char)
+type VectChar = (Int,Int,Char)
 
-findXMasCount :: [CartVectChar] -> [CartVectChar] -> Int
+findXMasCount :: [VectChar] -> [VectChar] -> Int
 findXMasCount [] _ = 0
 findXMasCount (cvc:cvcs) all
   | let (_,_,c) = cvc in c /= 'A' = findXMasCount cvcs all
@@ -21,13 +21,13 @@ getValidXmas :: [Int] -> Int
 getValidXmas [] = 0
 getValidXmas (x:xs:xss) = if x + xs == 2 then 1 else 0 + getValidXmas xss
 
-getVector :: (Int, Int) -> String -> [CartVectChar]
+getVector :: (Int, Int) -> String -> [VectChar]
 getVector (x,y) [] = []
 getVector (x,y) (s:ss)
   | s == '\n' = getVector (0, y+1) ss 
   | otherwise = (x,y,s) : getVector (x+1,y) ss
 
-getStar :: [CartVectChar] -> [[CartVectChar]]
+getStar :: [VectChar] -> [[VectChar]]
 getStar [] = []
 getStar cvcs = map (\f -> filter f smallcvcs) filters
   where filters = [isDiagonal, isAntiDiagonal] 
@@ -37,7 +37,7 @@ getStar cvcs = map (\f -> filter f smallcvcs) filters
         isDiagonal (x,y,_) = x == y
         isAntiDiagonal (x,y,_) = x == -y
 
-newRefPoint :: CartVectChar -> [CartVectChar] -> [CartVectChar]
+newRefPoint :: VectChar -> [VectChar] -> [VectChar]
 newRefPoint (xoffset,yoffset,_) = map (\(x,y,c) -> (x -xoffset, y -yoffset, c))
 
 getMatch :: String -> Int
